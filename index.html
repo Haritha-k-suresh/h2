@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Outfit Recommender</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #weather, #outfit {
+            margin-top: 20px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            input, button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Title Section -->
+        <h1>Weather-Based Outfit Recommender</h1>
+
+        <!-- Input Section -->
+        <input type="text" id="city" placeholder="Enter your city">
+        <button id="getWeather">Get Recommendation</button>
+
+        <!-- Output Section -->
+        <p id="weather"></p>
+        <p id="outfit"></p>
+    </div>
+
+    <script>
+        // Weather API Key
+        const API_KEY = "6276aa122418a62924c00f1de10846db";
+
+        // Fetch weather data from OpenWeatherMap
+        async function getWeather(city) {
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            return data;
+        }
+
+        // Outfit Recommendations
+        const outfits = {
+            cold: "Wear a warm jacket, scarf, and gloves.",
+            warm: "T-shirt and jeans are perfect for today!",
+            hot: "Go for shorts, a tank top, and sunglasses.",
+            rainy: "Don’t forget a raincoat and waterproof boots!"
+        };
+
+        // Get Outfit Suggestion
+        function getOutfitSuggestion(temp, condition) {
+            if (temp < 10) {
+                return outfits.cold;
+            } else if (temp >= 10 && temp < 25) {
+                return outfits.warm;
+            } else if (temp >= 25) {
+                return outfits.hot;
+            } else if (condition.includes("rain")) {
+                return outfits.rainy;
+            }
+            return "Just dress comfortably!";
+        }
+
+        // Handle Button Click
+        document.getElementById("getWeather").addEventListener("click", async function () {
+            const city = document.getElementById("city").value;
+
+            // Validate input
+            if (!city) {
+                document.getElementById("weather").textContent = "Please enter a valid city.";
+                return;
+            }
+
+            const weatherData = await getWeather(city);
+
+            if (weatherData.cod === 200) {
+                const temp = weatherData.main.temp;
+                const condition = weatherData.weather[0].description;
+
+                // Display Weather and Outfit Suggestion
+                document.getElementById("weather").textContent = 
+                    `Current weather in ${city}: ${temp}°C, ${condition}`;
+                document.getElementById("outfit").textContent = 
+                    getOutfitSuggestion(temp, condition);
+            } else {
+                document.getElementById("weather").textContent = 
+                    "City not found. Please try again.";
+            }
+        });
+    </script>
+</body>
+</html>
