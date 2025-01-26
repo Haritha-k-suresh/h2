@@ -97,7 +97,7 @@ WeatherYouLikeIt/
 ---
 
 ## License
-This project is open-source and available under the [MIT License](https://github.com/Haritha-k-suresh/h2/blob/main/LICENSE.md).
+This project is open-source and available under the [MIT License](LICENSE).
 
 ---
 
