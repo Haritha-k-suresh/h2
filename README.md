@@ -32,8 +32,8 @@
    ```
 
 3. **API Key**:
-   - Sign up at [OpenWeatherMap](https://openweathermap.org/) to get your free API key.
-   - Replace the placeholder API key in the script (`const API_KEY = "6276aa122418a62924c00f1de10846db"`) with your own API key.
+   - OpenWeatherMap (https://openweathermap.org/)
+   - `const API_KEY = "6276aa122418a62924c00f1de10846db"`.
 
 4. **Run the Application**:
    - Open `index.html` in your browser.
