@@ -111,19 +111,28 @@
 
         // Outfit Recommendations
         const outfits = {
-            cold: "Wear a warm jacket, scarf, and gloves.",
-            warm: "T-shirt and jeans are perfect for today!",
-            hot: "Go for shorts, a tank top, and sunglasses.",
+            fcold: "Wear thick, layered, and insulated clothing including thermal base layers, fleece jackets, down-filled coats, gloves, hats, scarves, and warm, waterproof boot",
+            cold: "Wear warm and layered clothing such as thermal tops and leggings, sweaters, coats, gloves, hats, and scarves, paired with insulated boots.",
+            cool: "Wear layers such as thermal tops, sweaters, fleece jackets, and warm pants or jeans, paired with boots and accessories like scarves and hats.",
+            mild: "Lightweight tops, sweaters or cardigans, and comfortable pants or jeans, paired with sneakers or boots will be perfect",
+            warm: "Wear breathable and comfortable clothing such as cotton or linen shirts, lightweight pants or capris, and loafers or sneakers for a perfect day out .",
+            hot: "Lightweight, light-colored, loose-fitting clothing such as cotton shirts, linen pants, shorts, sundresses, and sandals to keep you cool..",
             rainy: "Don’t forget a raincoat and waterproof boots!"
         };
 
         // Get Outfit Suggestion
         function getOutfitSuggestion(temp, condition) {
             if (temp < 10) {
+                return outfits.fcold;
+            } else if (temp >= 0 && temp < 10) {
                 return outfits.cold;
-            } else if (temp >= 10 && temp < 25) {
+            } else if (temp >= 10 && temp < 15) {
+                return outfits.cool;
+            } else if (temp >= 15 && temp < 25) {
+                return outfits.mild;
+            } else if (temp >= 25 && temp < 32) {
                 return outfits.warm;
-            } else if (temp >= 25) {
+            } else if (temp >= 32) {
                 return outfits.hot;
             } else if (condition.includes("rain")) {
                 return outfits.rainy;
